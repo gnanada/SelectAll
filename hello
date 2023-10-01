@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="piza.js"></script>
+</head>
+<body>
+    <fieldset>
+        <legend>
+            <input type="checkbox" id="selectAllService" name="selectAllService" onclick="handleSelectAll(this);" />
+            <label> (Select All) </label>
+        </legend>
+        <div id="question1Err" class="error"></div>
+        <div class="inputs gos_questionarie_inserted-service">
+            <!-- Service 1 -->
+            <div>
+                <input class="gos_questionnaire_insterested-services" id="UK_EMIR" type="checkbox" name="service" value="UK_EMIR" onchange="handleServiceSelect(this)" />
+                <label for="UK_EMIR">UK EMIR</label>
+            </div>
+            <div id="UK_EMIR-radios" class="radios" style="display: none">
+                <input type="radio" name="access_UK_EMIR" value="Standard" checked> Standard
+                <input type="radio" name="access_UK_EMIR" value="View Only"> View Only
+            </div>
+            
+            <!-- Service 2 -->
+            <div>
+                <input class="gos_questionnaire_insterested-services" id="EU_EMIR" type="checkbox" name="service" value="EU_EMIR" onchange="handleServiceSelect(this)" />
+                <label for="EU_EMIR">EU EMIR</label>
+            </div>
+            <div id="EU_EMIR-radios" class="radios" style="display: none">
+                <input type="radio" name="access_EU_EMIR" value="Standard" checked> Standard
+                <input type="radio" name="access_EU_EMIR" value="View Only"> View Only
+            </div>
+            <!-- Service 3 -->
+            <div>
+                <input class="gos_questionnaire_insterested-services" id="ASIC" type="checkbox" name="service" value="ASIC" onchange="handleServiceSelect(this)" />
+                <label for="ASIC">ASIC</label>
+            </div>
+            <div id="ASIC-radios" class="radios" style="display: none">
+                <input type="radio" name="access_ASIC" value="Standard" checked> Standard
+                <input type="radio" name="access_ASIC" value="View Only"> View Only
+            </div>
+            <!-- Service 4 -->
+            <div>
+                <input class="gos_questionnaire_insterested-services" id="EU_SFRA" type="checkbox" name="service" value="EU_SFRA" onchange="handleServiceSelect(this)" />
+                <label for="EU_SFRA">EU SFRA</label>
+            </div>
+            <!-- Service 5 -->
+            <div>
+                <input class="gos_questionnaire_insterested-services" id="SEC" type="checkbox" name="service" value="SEC" onchange="handleServiceSelect(this)" />
+                <label for="SEC">SEC</label>
+            </div>
+            <!-- Service 6 -->
+            <div>
+                <input class="gos_questionnaire_insterested-services" id="MAS" type="checkbox" name="service" value="MAS" onchange="handleServiceSelect(this)" />
+                <label for="MAS">MAS</label>
+            </div>
+            <div id="MAS-radios" class="radios" style="display: none">
+                <input type="radio" name="access_MAS" value="Standard" checked> Standard
+                <input type="radio" name="access_MAS" value="View Only"> View Only
+            </div>
+        </div>
+    </fieldset>
+</body>
+</html>
+
+
+
+
+
+  JavaScript:
+---------------------
+
+  function handleServiceSelect(checkbox) {
+    let allServiceInputs = document.querySelectorAll('input[name="service"]') || [];
+    let allChecked = true;
+    allServiceInputs.forEach((i) => {
+        if (!allChecked) {
+            return;
+        }
+        if (!i.checked) {
+            allChecked = false;
+        }
+    });
+    document.getElementById("selectAllService").checked = allChecked;
+
+    var serviceName = checkbox.value;
+    var radiosDiv = document.getElementById(serviceName + '-radios');
+    var checkedAll = document.getElementById("selectAllService").checked; 
+
+    if (checkedAll || checkbox.checked) {
+        radiosDiv.style.display = 'block';
+    } else {
+        radiosDiv.style.display = 'none';
+    }
+}
+function handleSelectAll(e) {
+    let serviceCheckboxes = document.querySelectorAll('input[name="service"]');
+    let isChecked = e.checked;
+    serviceCheckboxes.forEach((checkbox) => {
+        checkbox.checked = isChecked;
+        handleServiceSelect(checkbox); // Call handleServiceSelect for each checkbox
+    });
+}
